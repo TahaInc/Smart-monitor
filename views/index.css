@@ -1,0 +1,84 @@
+* {
+  font-family: "Poppins", sans-serif;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+h1 {
+  color: white;
+  font-size: 15vw;
+  line-height: 1em;
+  margin: 0;
+}
+
+h2 {
+  color: white;
+  font-size: 2vw;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+#brightness {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: black;
+  z-index: 1000;
+  opacity: 1;
+  transition: 0.5s;
+}
+
+#info {
+  position: fixed;
+  height: 20%;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+}
+
+#basic_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+#side_info {
+  width: 100%;
+}
+
+#gradient {
+  background: linear-gradient(to top, #000000 5%, rgba(0, 0, 0, 0) 50%);
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+}
+
+#wallpaper {
+  height: 100vh;
+  width: 100vw;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+#time {
+  margin-left: 5px;
+}
+
+#date {
+  margin-left: 20px;
+}
+
+#weather {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+#weather_icon {
+  filter: hue-rotate(20deg) saturate(1.5);
+  height: 150%;
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="black">
+    <title>Smart display - Admin</title>
+
+    <link rel="stylesheet" type="text/css" href="admin.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="icon" type="image/jpg" href="assets/icon.jpg" />
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+
+    <script src="allTeams.js" defer></script>
+    <script src="admin.js" defer></script>
+</head>
+
+<body>
+    <header id="nav">
+        <h1 id="title">Settings</h1>
+        <div id="power_wrapper" onclick="togglePower()">
+            <img id="power" src="assets/power.png">
+            <h2 id="power_text">On</h2>
+        </div>
+    </header>
+    <main>
+        <div class="setting_container" id="wallpaper_setting_container">
+            <h2>Wallpaper</h2>
+
+            <div class="subsetting_container">
+                <div class="setting_text">
+                    <h2>Interval</h2>
+                    <h2 id="interval_text">3s</h2>
+                </div>
+                <input type="range" min="1" max="62" value="3" step="1" class="slider" id="interval_slider"
+                    onmouseup="pushSettings('pictureInterval', this.value)"
+                    ontouchend="pushSettings('pictureInterval', this.value)">
+            </div>
+
+            <div id="wallpaper_selection">
+                <button id="wallpaper_auto" onclick="selectWallpaperCategory(this)">Auto</button>
+                <button id="wallpaper_custom" onclick="selectWallpaperCategory(this)">Custom</button>
+            </div>
+            <div id="wallpaper_selection_menu">
+                <div id="wallpaper_auto_menu">
+                    <select name="category" id="wallpaper_category_selection"
+                        onchange="selectWallpaperAutoCategory(this)">
+                        <option value="all">All categories</option>
+                        <option value="city">City</option>
+                        <option value="space">Space</option>
+                        <option value="nature">Nature</option>
+                        <option value="abstract">Abstract</option>
+                    </select>
+                </div>
+                <div id="wallpaper_custom_menu">
+                    <div id="custom_wallpaper_view">
+
+                    </div>
+                    <form id="photo_form" action="/pictures" enctype="multipart/form-data" method="post">
+                        <input type="file" name="multi-files" accept='image/*' multiple>
+                        <input type="submit" value="Upload">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="setting_container">
+            <h2>Sports</h2>
+
+            <h4 class="subtitle">Favorite teams</h4>
+            <div id="fav_team_list">
+            </div>
+
+            <div id="add_team_input">
+                <input type="input" class="input_text" placeholder="Team name" id="team_input" />
+                <button id="add_team_button" onclick="addFavoriteTeam()">Add</button>
+            </div>
+
+
+            <h4 class="subtitle">Pin games</h4>
+            <div id="all_games_wrapper">
+
+            </div>
+        </div>
+
+        <div class="setting_container">
+            <div class="setting_text">
+                <h2>Brightness</h2>
+                <h2 id="brightness_text">0%</h2>
+            </div>
+            <input type="range" min="0" max="100" value="100" step="1" class="slider" id="brightness_slider"
+                onmouseup="pushSettings('brightness', this.value)" ontouchend="pushSettings('brightness', this.value)">
+        </div>
+
+        <div class="setting_container">
+            <h2>Weather</h2>
+            <input type="text" class="input_text" placeholder="City name" id="weather"
+                onchange="pushSettings('weatherLocation', this.value)" onfocus="pauseSync = true">
+            <div id="wallpaper_selection">
+                <button id="metric" onclick="selectWeatherCategory(this)">Metric</button>
+                <button id="imperial" onclick="selectWeatherCategory(this)">Imperial</button>
+            </div>
+        </div>
+
+
+        <div class="setting_container">
+            <h2>Time</h2>
+            <div id="wallpaper_selection">
+                <button id="12hrs" onclick="selectTimeFormat(12)">12 hours</button>
+                <button id="24hrs" onclick="selectTimeFormat(24)">24 hours</button>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
