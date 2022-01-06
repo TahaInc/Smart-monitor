@@ -92,14 +92,12 @@ function deleteCustomImage(filename) {
     } else {
       document.getElementById(filename).classList.remove("delete_warning");
     }
-  }, 1);
+  }, 10);
 }
 
 function addFavoriteTeam(team = document.getElementById("team_input").value, serverFetch = false) {
-  let teams = Object.keys(allTeams);
-
   if (!(team in data["favTeams"])) {
-    if (teams.includes(team)) {
+    if (allTeams.includes(team)) {
       pauseSync = true;
       document.getElementById("fav_team_list").innerHTML += '<div id="fav_team"> <h3>' + team + '</h3> <button class="remove_team_button" id="' + team + '" onclick="removeFavoriteTeam(\'' + team + "')\">&times;</button> </div>";
       document.getElementById("team_input").value = "";
@@ -138,8 +136,14 @@ function selectTimeFormat(time) {
 }
 
 function addPinnedGame(id) {
-  pauseSync = true;
   let element = document.getElementById(id);
+
+  if (Object.values(data.allGames).filter((game) => game.selected).length >= 8 && !element.classList.contains("selected")) {
+    alert("Too many pinned games");
+    return;
+  }
+
+  pauseSync = true;
   if (element.classList.contains("selected")) {
     element.classList.remove("selected");
     data["allGames"][id]["selected"] = false;
@@ -189,25 +193,20 @@ function fetchSettings() {
         expandWallpaperCategory(data["wallpaperCategory"]);
         document.getElementById("wallpaper_category_selection").value = data["wallpaperAutoCategory"];
 
-        document.getElementById("all_games_wrapper").innerHTML = "";
+        for (let i = 0; i < document.getElementsByClassName("all_games_wrapper").length; i++) {
+          document.getElementsByClassName("all_games_wrapper")[i].innerHTML = "<span class='no_game'>No games today</span>";
+        }
+
+        let leagues = [];
 
         Object.values(data.allGames).forEach(function (game) {
-          document.getElementById("all_games_wrapper").innerHTML +=
-            "<div onclick='addPinnedGame(" +
-            game.id +
-            ")' id='" +
-            game.id +
-            "' class='all_games " +
-            (game.selected ? "selected" : "") +
-            "'><div class='team_1'><img class='team_1' src='" +
-            game.team1Logo +
-            "'><h6>" +
-            game.shortNames[1] +
-            "</h6></div><h3>vs</h3><div class='team_2'><img class='team_2' src='" +
-            game.team2Logo +
-            "'><h6>" +
-            game.shortNames[0] +
-            "</h6></div></div>";
+          if (!leagues.includes(game.league)) {
+            leagues.push(game.league);
+            document.getElementById(game.sport.toLowerCase() + "_games").innerHTML += "<div class='games_league'><h2 class='vertical_text'>" + game.league.toUpperCase() + "</h2><span class='games_league' id='" + game.league.toLowerCase() + "'></span></div>";
+          }
+
+          document.querySelector("#" + game.sport.toLowerCase() + "_games > span")?.remove();
+          document.getElementById(game.league.toLowerCase()).innerHTML += "<div onclick='addPinnedGame(" + game.id + ")' id='" + game.id + "' class='all_games " + (game.selected ? "selected" : "") + "'><div class='team_1'><img class='team_1' src='" + game.logos[0] + "'><h6>" + game.shortNames[1] + "</h6></div><h3 class='vs'>vs</h3><div class='team_2'><img class='team_2' src='" + game.logos[1] + "'><h6>" + game.shortNames[0] + "</h6></div></div>";
         });
 
         if (JSON.stringify(oldData.favTeams) !== JSON.stringify(data.favTeams)) {
@@ -232,8 +231,7 @@ function fetchSettings() {
           });
           data.customPictures.forEach((picture) => {
             if (!oldData.customPictures.includes(picture)) {
-              document.getElementById("custom_wallpaper_view").innerHTML =
-                "<div id='" + picture + "' onclick='deleteCustomImage(\"" + picture + "\")'><img id='" + picture + "' class='custom_picture' src='data/custom/" + picture + "'></div>" + document.getElementById("custom_wallpaper_view").innerHTML;
+              document.getElementById("custom_wallpaper_view").innerHTML = "<div id='" + picture + "' onclick='deleteCustomImage(\"" + picture + "\")'><img id='" + picture + "' class='custom_picture' src='data/custom/" + picture + "'></div>" + document.getElementById("custom_wallpaper_view").innerHTML;
             }
           });
         }
@@ -245,7 +243,7 @@ function fetchSettings() {
 }
 
 $("#team_input").autocomplete({
-  source: Object.keys(allTeams),
+  source: allTeams,
 });
 
 fetchSettings();

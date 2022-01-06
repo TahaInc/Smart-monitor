@@ -12,6 +12,27 @@ h1 {
 
 h2 {
   color: white;
+  font-size: 2.5vw;
+  margin: 0;
+}
+
+h3 {
+  color: white;
+  font-size: 3vw;
+  margin: 0;
+}
+
+.score {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.score.become_small {
+  font-size: 2vw;
+}
+
+h4 {
+  color: rgba(255, 255, 255, 0.8);
   font-size: 2vw;
   margin: 0;
 }
@@ -19,6 +40,10 @@ h2 {
 body {
   margin: 0;
   overflow: hidden;
+}
+
+.hidden {
+  display: none;
 }
 
 #brightness {
@@ -33,21 +58,25 @@ body {
 
 #info {
   position: fixed;
-  height: 20%;
+  height: 50%;
   width: 100%;
   bottom: 0;
   display: flex;
+  box-sizing: border-box;
+  padding: 0 10px 20px 20px;
+  z-index: 100;
 }
 
 #basic_info {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   width: 100%;
 }
 
 #side_info {
   width: 100%;
+  height: 100%;
 }
 
 #gradient {
@@ -57,11 +86,22 @@ body {
   width: 100vw;
 }
 
-#wallpaper {
+.wallpaper {
+  position: absolute;
+  top: 0;
   height: 100vh;
   width: 100vw;
   object-fit: cover;
-  object-position: bottom;
+  object-position: center;
+  transition: 0.5s;
+}
+
+#wallpaper_front {
+  z-index: -50;
+}
+
+#wallpaper_back {
+  z-index: -100;
 }
 
 #time {
@@ -75,10 +115,83 @@ body {
 #weather {
   display: flex;
   align-items: center;
-  height: 50px;
+  margin-left: 15px;
 }
 
 #weather_icon {
   filter: hue-rotate(20deg) saturate(1.5);
-  height: 150%;
+  height: 5vw;
+}
+
+.scoreboard.full {
+  width: 100%;
+}
+
+.scoreboard {
+  width: 50%;
+  margin: 2px 0;
+}
+
+.main_scoreboard {
+  display: flex;
+  border-radius: 30px;
+  width: 75%;
+  padding: 3px 10px;
+  font-size: 1em;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sub_scoreboard {
+  display: flex;
+  border-radius: 30px;
+  background-color: black;
+  color: white;
+  font-size: 15px;
+  box-shadow: 0 -5px 20px rgba(220, 220, 220, 0.2);
+  width: fit-content;
+  padding: 0px 10px;
+  justify-content: center;
+  margin: 0 10px;
+  border: 1px white solid;
+}
+
+.scoreboard_logo {
+  height: 40px;
+}
+
+.scoreboard_layout_1 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+}
+
+.scoreboard_layout_2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-self: flex-end;
+  align-content: flex-end;
+}
+
+.sub_section {
+  display: flex;
+  justify-content: center;
+}
+
+.middle_text {
+  display: flex;
+  flex-direction: column;
+  transform: translate(0, -10px);
+}
+
+.league {
+  text-align: center;
+  padding-top: 12px;
+  line-height: 10px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
 }

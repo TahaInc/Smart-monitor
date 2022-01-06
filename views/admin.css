@@ -1,6 +1,7 @@
 * {
   font-family: "Poppins", sans-serif;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 body {
@@ -13,6 +14,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-weight: normal;
   margin: 0;
 }
 
@@ -135,7 +137,7 @@ button.time_selected {
 }
 
 #wallpaper_setting_container {
-  height: 130px;
+  height: 255px;
 }
 
 #wallpaper_selection {
@@ -240,6 +242,7 @@ button.time_selected {
   font-size: 1.2em;
   width: 35px;
   height: 35px;
+  padding: 0;
 }
 
 #fav_team {
@@ -265,7 +268,24 @@ button.time_selected {
   overflow-x: hidden !important;
 }
 
-#all_games_wrapper {
+.vertical_text {
+  font-size: 1em;
+  padding-right: 10px;
+  writing-mode: vertical-rl;
+  text-orientation: sideways;
+  color: rgb(94, 94, 94);
+}
+
+div.games_league {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin: 0 5px 10px 5px;
+  border-radius: 5px;
+  background-color: rgb(170, 170, 170);
+}
+
+span.games_league {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
@@ -298,4 +318,25 @@ div.team_2 {
   flex-direction: column;
   align-items: center;
   width: 20%;
+}
+
+.sport_text {
+  margin-top: 20px;
+  margin-left: 7px;
+}
+
+.no_game {
+  margin-left: 7px;
+  color: rgb(100, 100, 100);
+}
+
+@media only screen and (max-width: 600px) {
+  h6 {
+    font-size: 10px;
+  }
+
+  .vs {
+    font-size: 15px;
+    padding: 0 4px;
+  }
 }
