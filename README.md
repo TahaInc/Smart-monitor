@@ -11,6 +11,12 @@
 
 <br />
 
-**A gorgeous smart monitor that displays all the info you need** image
+**A gorgeous smart monitor that displays all the info you need**
 
-**Change everything about the monitor** image
+![Display](https://github.com/TahaInc/smart-monitor/blob/master/Screenshots/Mockup_display.png?raw=true)
+
+<br />
+
+**Change everything about the monitor**
+
+![Settings](https://github.com/TahaInc/smart-monitor/blob/master/Screenshots/Mockup_settings.png?raw=true)
