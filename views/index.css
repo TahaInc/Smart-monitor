@@ -37,6 +37,10 @@ h4 {
   margin: 0;
 }
 
+h5 {
+  font-size: 0.9em !important;
+}
+
 body {
   margin: 0;
   overflow: hidden;
@@ -134,9 +138,9 @@ body {
 
 .main_scoreboard {
   display: flex;
-  border-radius: 30px;
+  border-radius: 10vw;
   width: 75%;
-  padding: 3px 10px;
+  padding: 3px 20px;
   font-size: 1em;
   margin: 0 auto;
   justify-content: center;
@@ -146,13 +150,13 @@ body {
 
 .sub_scoreboard {
   display: flex;
-  border-radius: 30px;
+  border-radius: 10vw;
   background-color: black;
   color: white;
-  font-size: 15px;
+  font-size: min(calc(1vw + 1vh), 1.8em);
   box-shadow: 0 -5px 20px rgba(220, 220, 220, 0.2);
   width: fit-content;
-  padding: 0px 10px;
+  padding: 0px 20px;
   justify-content: center;
   margin: 0 10px;
   border: 1px white solid;
@@ -160,6 +164,10 @@ body {
 
 .scoreboard_logo {
   height: 40px;
+}
+
+.scoreboard_logo.become_small {
+  height: 4px;
 }
 
 .scoreboard_layout_1 {
@@ -189,9 +197,10 @@ body {
 }
 
 .league {
+  font-size: 1em;
   text-align: center;
   padding-top: 12px;
-  line-height: 10px;
+  line-height: 15px;
   margin: 0;
   color: rgba(255, 255, 255, 0.6);
 }

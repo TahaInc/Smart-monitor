@@ -81,7 +81,7 @@ app.delete("/pictures", (req, res) => {
 });
 
 app.listen(3000, function () {
-  console.log("Server listening on port 3000.");
+  console.log("Server listening on port 3000");
 });
 
 // Interval for function updates
@@ -101,7 +101,6 @@ schedule.scheduleJob("0 6 * * *", () => {
   saveSettings();
 });
 
-// Functions
 function saveSettings() {
   fs.writeFile("settings.json", JSON.stringify(info), "utf8", () => {});
 }
@@ -141,7 +140,7 @@ function countdown() {
     pictureInterval = newPictureInterval;
   }
 
-  if (pictureCategory != info["wallpaperCategory"] || pictureAutoCategory != info["wallpaperAutoCategory"]) changeWallpaper();
+  if (pictureCategory != info["wallpaperCategory"] || pictureAutoCategory != info["wallpaperAutoCategory"] || info["wallpaper"] == "../empty.png") changeWallpaper();
 
   countdownTimer--;
 
@@ -152,7 +151,15 @@ function countdown() {
 }
 
 function getCountdownSeconds() {
-  return info["pictureInterval"] === "61" ? 3600 : info["pictureInterval"] === "62" ? 86400 : parseInt(info["pictureInterval"]);
+  if (info["pictureInterval"] === "61") {
+    return 3600;
+  } else if (info["pictureInterval"] === "62") {
+    return 86400;
+  } else if (info["pictureInterval"] === "63") {
+    return 9999999999;
+  } else {
+    return parseInt(info["pictureInterval"]);
+  }
 }
 
 function getWeather() {
@@ -167,7 +174,7 @@ function getWeather() {
 }
 
 function getSportsGames() {
-  let favTeams = Object.keys(info["favTeams"]);
+  let favTeams = info["favTeams"];
   let oldGameId = Object.keys(info["allGames"]);
 
   let d = new Date();
@@ -206,7 +213,7 @@ function getSportsGames() {
 
 function addToAllGames(data, oldData, sport, favTeams, league) {
   let date = new Date(Date.parse(data["date"]));
-  let time = date.toLocaleString("en-US", { hour: "numeric", minute: "2-digit", hour12: !info.militaryTime });
+  let time = date.toLocaleString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
   let selected = false;
 
   if (oldData) selected = info["allGames"][data["id"]]?.selected;
@@ -220,16 +227,16 @@ function addToAllGames(data, oldData, sport, favTeams, league) {
   info["allGames"][data["id"]]["shortNames"] = [data["competitors"][0]["abbreviation"], data["competitors"][1]["abbreviation"]];
   info["allGames"][data["id"]]["fullNames"] = [data["competitors"][0]["displayName"], data["competitors"][1]["displayName"]];
   info["allGames"][data["id"]]["logos"] = [data["competitors"][1]["logo"], data["competitors"][0]["logo"]];
-  info["allGames"][data["id"]]["colors"] = [ajdustColor(tooDark(data["competitors"][1]["color"]) ? data["competitors"][1]["alternateColor"] : data["competitors"][1]["color"], -20), ajdustColor(tooDark(data["competitors"][0]["color"]) ? data["competitors"][0]["alternateColor"] : data["competitors"][0]["color"], -20)];
+  info["allGames"][data["id"]]["colors"] = [ajdustColor(tooDark(data["competitors"][1]["color"]) ? data["competitors"][1]["alternateColor"] : data["competitors"][1]["color"], -25), ajdustColor(tooDark(data["competitors"][0]["color"]) ? data["competitors"][0]["alternateColor"] : data["competitors"][0]["color"], -25)];
   info["allGames"][data["id"]]["scores"] = [data["competitors"][0]["score"] == "" ? "0" : data["competitors"][1]["score"], data["competitors"][1]["score"] == "" ? "0" : data["competitors"][0]["score"]];
   info["allGames"][data["id"]]["selected"] = selected;
 
   if (sport == "Football") info["allGames"][data["id"]]["possession"] = data["competitors"]?.possessionText == undefined ? undefined : data["competitors"]?.possessionText + " - " + data["competitors"]?.downDistanceText;
 
   if (data["summary"].includes(time)) {
-    info["allGames"][data["id"]]["shortDetail"] = time;
+    info["allGames"][data["id"]]["shortDetail"] = date.toLocaleString("en-US", { hour: "numeric", minute: "2-digit", hour12: !info.militaryTime });
   } else {
-    info["allGames"][data["id"]]["shortDetail"] = data["summary"] == "FT" ? "Final" : data["summary"];
+    info["allGames"][data["id"]]["shortDetail"] = data["summary"] == "FT" ? "Final" : data["summary"] == "HT" ? "Half-time" : data["summary"];
   }
 
   favTeams.forEach((team) => {
@@ -239,6 +246,7 @@ function addToAllGames(data, oldData, sport, favTeams, league) {
 
 function ajdustColor(color, amount) {
   if (color === undefined) return "#000";
+  if (color == "000000") return "#bc2c45";
   return "#" + color.replace(/../g, (color) => ("0" + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
 }
 

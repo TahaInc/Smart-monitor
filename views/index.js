@@ -39,11 +39,9 @@ function refreshData() {
       if (games.length <= 3) {
         document.getElementById("side_info").classList = "scoreboard_layout_1";
         document.querySelector("h3").classList.remove("become_small");
-        document.querySelector(".scoreboard_logo").classList.remove("become_small");
       } else if (games.length <= 8) {
         document.getElementById("side_info").classList = "scoreboard_layout_2";
         document.querySelector("h3").classList.add("become_small");
-        document.querySelector(".scoreboard_logo").classList.add("become_small");
       }
 
       let gamesCounter = 0;
@@ -59,14 +57,14 @@ function refreshData() {
           scoreboard.childNodes[1].childNodes[3].innerHTML = game.shortNames[1];
           scoreboard.childNodes[1].childNodes[7].innerHTML = game.shortNames[0];
           scoreboard.childNodes[1].childNodes[5].childNodes[1].style.fontSize = "10px";
-          scoreboard.childNodes[1].childNodes[1].style.height = "35px";
-          scoreboard.childNodes[1].childNodes[9].style.height = "35px";
-          scoreboard.childNodes[3].childNodes[1].style.transform = "translate(0, -10px)";
+          scoreboard.childNodes[1].childNodes[1].style.height = "5vw";
+          scoreboard.childNodes[1].childNodes[9].style.height = "5vw";
+          scoreboard.childNodes[3].childNodes[1].style.transform = "translate(0, -12px)";
           scoreboard.classList.add("full");
         } else if (games.length <= 8) {
           scoreboard.childNodes[3].style.fontSize = "12px";
-          scoreboard.childNodes[1].childNodes[1].style.height = "30px";
-          scoreboard.childNodes[1].childNodes[9].style.height = "30px";
+          scoreboard.childNodes[1].childNodes[1].style.height = "4vw";
+          scoreboard.childNodes[1].childNodes[9].style.height = "4vw";
           scoreboard.childNodes[3].childNodes[1].style.transform = "translate(0, -12px) scale(0.8)";
           scoreboard.childNodes[1].childNodes[5].childNodes[1].style.fontSize = "7px";
           scoreboard.classList.remove("full");

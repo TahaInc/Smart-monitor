@@ -1,4 +1,4 @@
-let data = { power: 1, brightness: 100, wallpaperCategory: "auto", wallpaperAutoCategory: "all", pictureInterval: 3, weatherLocation: "Ottawa", weatherMeasurement: "metric", weather: "", customPictures: [], favTeams: {} };
+let data = { power: 1, brightness: 100, wallpaperCategory: "auto", wallpaperAutoCategory: "all", pictureInterval: 3, weatherLocation: "Ottawa", weatherMeasurement: "metric", weather: "", customPictures: [], favTeams: [] };
 
 let brightnessSlider = document.getElementById("brightness_slider");
 let intervalSlider = document.getElementById("interval_slider");
@@ -19,6 +19,8 @@ function setIntervalText() {
     document.getElementById("interval_text").innerHTML = "Every hour";
   } else if (intervalSlider.value === "62") {
     document.getElementById("interval_text").innerHTML = "Every day";
+  } else if (intervalSlider.value === "63") {
+    document.getElementById("interval_text").innerHTML = "Never";
   } else {
     document.getElementById("interval_text").innerHTML = intervalSlider.value + "s";
   }
@@ -96,14 +98,15 @@ function deleteCustomImage(filename) {
 }
 
 function addFavoriteTeam(team = document.getElementById("team_input").value, serverFetch = false) {
-  if (!(team in data["favTeams"])) {
+  if (!data["favTeams"].includes(team)) {
     if (allTeams.includes(team)) {
       pauseSync = true;
       document.getElementById("fav_team_list").innerHTML += '<div id="fav_team"> <h3>' + team + '</h3> <button class="remove_team_button" id="' + team + '" onclick="removeFavoriteTeam(\'' + team + "')\">&times;</button> </div>";
       document.getElementById("team_input").value = "";
-      data["favTeams"][team] = allTeams[team];
+      data["favTeams"].push(team);
       pushSettings("favTeams", data["favTeams"]);
     } else {
+      console.log(team);
       alert("Invalid team");
     }
   } else if (serverFetch) {
@@ -117,7 +120,7 @@ function addFavoriteTeam(team = document.getElementById("team_input").value, ser
 function removeFavoriteTeam(team, serverFetch = false) {
   if (!serverFetch) {
     pauseSync = true;
-    delete data["favTeams"][team];
+    data["favTeams"].splice(data["favTeams"].indexOf(team), 1);
     pushSettings("favTeams", data["favTeams"]);
   }
   document.getElementById(team).closest("#fav_team").remove();
@@ -210,14 +213,14 @@ function fetchSettings() {
         });
 
         if (JSON.stringify(oldData.favTeams) !== JSON.stringify(data.favTeams)) {
-          Object.keys(data["favTeams"]).forEach(function (team) {
-            if (!Object.keys(oldData["favTeams"]).includes(team)) {
+          data["favTeams"].forEach(function (team) {
+            if (!oldData["favTeams"].includes(team)) {
               addFavoriteTeam(team, true);
             }
           });
 
-          Object.keys(oldData["favTeams"]).forEach(function (team) {
-            if (!Object.keys(data["favTeams"]).includes(team)) {
+          oldData["favTeams"].forEach(function (team) {
+            if (!data["favTeams"].includes(team)) {
               removeFavoriteTeam(team, true);
             }
           });
