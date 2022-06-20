@@ -245,12 +245,14 @@ function addToAllGames(data, oldData, sport, favTeams, league) {
 }
 
 function ajdustColor(color, amount) {
-  if (color === undefined) return "#000";
+  if (color === undefined || color === null) return "#000";
   if (color == "000000") return "#bc2c45";
   return "#" + color.replace(/../g, (color) => ("0" + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
 }
 
 function tooDark(color) {
+  if (color === undefined || color === null) return true;
+
   const c_r = parseInt(color.substr(0, 2), 16);
   const c_g = parseInt(color.substr(2, 2), 16);
   const c_b = parseInt(color.substr(4, 2), 16);
