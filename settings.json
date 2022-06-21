@@ -1,0 +1,15 @@
+{
+  "wallpaperCategory": "auto",
+  "wallpaperAutoCategory": "city",
+  "wallpaper": "city_4.jpg",
+  "pictureInterval": "30",
+  "customPictures": [],
+  "allGames": {},
+  "favTeams": [],
+  "weatherLocation": "Chicago",
+  "weatherMeasurement": "imperial",
+  "power": 1,
+  "weather": "79°F clear sky",
+  "weatherIcon": "01n",
+  "brightness": "100"
+}

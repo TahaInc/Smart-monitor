@@ -1,5 +1,4 @@
 weatherAPI
 node_modules
 views/data/custom/*
-settings.json
 .DS_Store
