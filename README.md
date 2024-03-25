@@ -13,10 +13,10 @@
 
 **A gorgeous smart monitor that displays all the info you need**
 
-![Display](https://github.com/TahaInc/smart-monitor/blob/master/images/display.png?raw=true)
+![Display](./images/display.png)
 
 <br />
 
 **Change everything about the monitor**
 
-![Settings](https://github.com/TahaInc/smart-monitor/blob/master/images/settings.png?raw=true)
+![Settings](./images/settings.png)
